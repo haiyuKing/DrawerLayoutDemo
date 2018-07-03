@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 	private void initViews() {
 		nav_userImg = (ImageView) findViewById(R.id.nav_user);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.id_drawerLayout);
-		//DrawerLayout.LOCK_MODE_LOCKED_CLOSED：关闭手势滑动
+		//关闭手势滑动：DrawerLayout.LOCK_MODE_LOCKED_CLOSED（Gravity.LEFT：代表左侧的）
 		mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.LEFT);
 
 		leftMenuFragment = (MainMenuLeftFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_leftmenu);
@@ -59,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
 			}
 		});
 
-		//左侧的侧边栏的事件监听
-		mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener()
+		//侧边栏的事件监听
+		mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener()
 		{
 			/**
 			 * 当抽屉滑动状态改变的时候被调用
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			public void onDrawerSlide(View drawerView, float slideOffset)
 			{
-				Log.w("MainActivity", "slideOffset="+slideOffset);//0.0 -- 0.56 -- 1.0
+				Log.w("onDrawerSlide", "slideOffset="+slideOffset);//0.0 -- 0.56 -- 1.0
 
 				View mContent = mDrawerLayout.getChildAt(0);//内容区域view
 				View mMenu = drawerView;
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			public void onDrawerOpened(View drawerView) {
 				if (drawerView.getTag().equals("LEFT")){//如果感觉显示有延迟的话，可以放到nav_userImg的点击事件监听中执行
-					leftMenuFragment.setDefaultDatas();//打开的时候初始化默认数据【请求网络，获取数据】
+					leftMenuFragment.setDefaultDatas();//打开的时候初始化默认数据【比如：请求网络，获取数据】
 				}
 			}
 			/**
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			public void onDrawerClosed(View drawerView)
 			{
-				//DrawerLayout.LOCK_MODE_LOCKED_CLOSED：关闭手势滑动
+				//关闭手势滑动：DrawerLayout.LOCK_MODE_LOCKED_CLOSED（Gravity.LEFT：代表左侧的）
 				mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.LEFT);
 			}
 		});
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
 	public void OpenLeftMenu()
 	{
 		mDrawerLayout.openDrawer(Gravity.LEFT);
-		//DrawerLayout.LOCK_MODE_UNLOCKED：打开手势滑动
+		//打开手势滑动：DrawerLayout.LOCK_MODE_UNLOCKED（Gravity.LEFT：代表左侧的）
 		mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED,Gravity.LEFT);
 	}
 }
